@@ -61,11 +61,10 @@ def answer_question(question, data):
 def main():
     st.title('PDF Table Extractor and Question Answering System')
 
-    # Step 1: User uploads a PDF
     uploaded_pdf = st.file_uploader("Upload a PDF containing tables", type="pdf")
     
     if uploaded_pdf:
-        # Step 2: Extract tables from the PDF
+        # Extract tables from the PDF
         try:
             extracted_tables = extract_tables_from_pdf(uploaded_pdf)
             st.success('Tables extracted successfully!')
@@ -73,7 +72,7 @@ def main():
             st.error(f'An error occurred when extracting tables: {e}')
             return
 
-        # Step 4: Preprocess the data
+        # Preprocess the data
         preprocessed_data = preprocess_table_data(extracted_tables)
 
         # Displaying the extracted table for user reference
@@ -83,14 +82,14 @@ def main():
         # Convert the preprocessed data to a string for GPT-3
         data_as_string = preprocessed_data.to_string(index=False)
         
-        # Step 3: User inputs a question
+        # User inputs a question
         user_question = st.text_input("Enter your question related to the table(s)")
         
         if user_question:
-            # Step 5: Utilize Language Model
+            # Utilize Language Model
             answer = answer_question(user_question, data_as_string)
 
-            # Step 6: Present the answer
+            # The answer
             st.subheader('Answer')
             st.write(answer)
 
